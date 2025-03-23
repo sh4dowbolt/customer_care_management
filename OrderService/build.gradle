@@ -18,12 +18,16 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-data-jpa:${springVersion}"
     implementation 'org.mapstruct:mapstruct:1.6.3'
 
+
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
-
-    annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'
+    testImplementation 'org.assertj:assertj-core:4.0.0-M1'
+    annotationProcessor 'org.projectlombok:lombok:1.18.36'
 
     compileOnly 'org.projectlombok:lombok:1.18.36'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'
+    annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
+
 }
 test {
     useJUnitPlatform()

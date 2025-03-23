@@ -1,13 +1,16 @@
 package com.suraev.entity;
 
+import com.suraev.entity.enums.UserType;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-@Getter
-@Setter
+
 @Table(name = "users")
-public class UserEntity {
+@Data
+@Builder
+@AllArgsConstructor
+public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id",nullable = false)
@@ -17,6 +20,6 @@ public class UserEntity {
     private String name;
 
     @Column(name = "type", nullable = false)
-    private String type;
+    private UserType type;
 
 }
