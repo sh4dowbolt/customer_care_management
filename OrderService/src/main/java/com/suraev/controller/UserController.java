@@ -4,7 +4,6 @@ import com.suraev.dto.UserDTO;
 import com.suraev.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -36,6 +35,12 @@ public class UserController {
         Optional<UserDTO> user = userService.getUserById(id);
         return user.map(dto -> new ResponseEntity<>(user.get(), HttpStatus.FOUND))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @DeleteMapping("/delete-user/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Integer id) {
+        userService.deleteUser(id);
+        return ResponseEntity.notFound().build();
     }
 
 

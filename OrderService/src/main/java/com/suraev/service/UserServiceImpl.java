@@ -37,4 +37,13 @@ public class UserServiceImpl implements UserService {
     public Optional<UserDTO> getUserById(Integer id) {
         return userEntityRepository.findById(id).map(UserEntityMapper.INSTANCE::toUserDTO);
     }
+
+    @Override
+    public boolean deleteUser(Integer id) {
+        if(userEntityRepository.existsById(id)) {
+            userEntityRepository.deleteById(id);
+            return true;
+        }
+        return false;
+    }
 }

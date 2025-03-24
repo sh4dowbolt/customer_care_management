@@ -5,8 +5,6 @@ import com.suraev.entity.User;
 import com.suraev.entity.enums.UserType;
 import com.suraev.repository.UserEntityRepository;
 import com.suraev.util.UserEntityMapper;
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,11 +14,12 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.tuple;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.mockito.Mockito.atLeastOnce;
 
 @ExtendWith(MockitoExtension.class)
 class UserServiceImplTest {
@@ -93,7 +92,34 @@ class UserServiceImplTest {
          assertThat(actualResult).isPresent().get().extracting("id").isEqualTo(id);
 
      }
+ }
+ @Nested
+    class deleteUser {
 
+     @Test
+     public void deleteUserByIdIfExisted() {
+         //given
+         Integer id=1;
+         //when
+         Mockito.when(userEntityRepository.existsById(id)).thenReturn(true);
+         userEntityRepository.deleteById(id);
+         //then
+         boolean actualResult = userService.deleteUser(id);
+         Mockito.verify(userEntityRepository, atLeastOnce()).deleteById(id);
+         assertThat(actualResult).isTrue();
+     }
+     @Test
+     public void deleteByIdIfNotExisted() {
+         //given
+         Integer id=2;
+         //when
+         Mockito.when(userEntityRepository.existsById(id)).thenReturn(false);
+         userEntityRepository.deleteById(id);
+         //then
+         boolean actualResult = userService.deleteUser(id);
+         Mockito.verify(userEntityRepository, atLeastOnce()).deleteById(id);
+         assertThat(actualResult).isFalse();
+     }
  }
  }
 
