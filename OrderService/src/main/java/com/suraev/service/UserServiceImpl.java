@@ -26,12 +26,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User createUser(UserDTO userDTO) {
-        return null;
+    public UserDTO createUser(UserDTO userDTO) {
+
+        final var user = UserEntityMapper.INSTANCE.toUser(userDTO);
+        User userToDB = userEntityRepository.save(user);
+        return UserEntityMapper.INSTANCE.toUserDTO(userToDB);
     }
 
     @Override
-    public Optional<UserDTO> getUserById(Long id) {
-        return Optional.empty();
+    public Optional<UserDTO> getUserById(Integer id) {
+        return userEntityRepository.findById(id).map(UserEntityMapper.INSTANCE::toUserDTO);
     }
 }

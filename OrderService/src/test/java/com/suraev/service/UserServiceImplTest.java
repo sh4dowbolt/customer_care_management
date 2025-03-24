@@ -4,6 +4,7 @@ import com.suraev.dto.UserDTO;
 import com.suraev.entity.User;
 import com.suraev.entity.enums.UserType;
 import com.suraev.repository.UserEntityRepository;
+import com.suraev.util.UserEntityMapper;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Nested;
@@ -16,6 +17,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -23,14 +25,13 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(MockitoExtension.class)
 class UserServiceImplTest {
 
+    @Mock
+    UserEntityRepository userEntityRepository;
+    @InjectMocks
+    UserServiceImpl userService;
 
  @Nested
  class  getAllUsers {
-
-     @Mock
-     UserEntityRepository userEntityRepository;
-     @InjectMocks
-     UserServiceImpl userService;
 
     @Test
      public void shouldReturnAllUsersDTO() {
@@ -54,9 +55,49 @@ class UserServiceImplTest {
                                 .toList()
                 ),
                 () -> Mockito.verify(userEntityRepository, Mockito.atLeast(1)).findAll());
+     }
+ }
+
+ @Nested
+    class createUser {
+
+     @Test
+     public void createUserInDb() {
+
+         //given
+         UserDTO userDTO = new UserDTO(1, "Michael", UserType.CASUAL);
+         User user = UserEntityMapper.INSTANCE.toUser(userDTO);
+         //when
+         Mockito.when(userEntityRepository.save(user)).thenReturn(user);
+         //then
+         UserDTO result = userService.createUser(userDTO);
+
+         assertThat(result.name()).isEqualTo(user.getName());
+
+         }
+     }
+
+ @Nested
+    class findByIdUser {
+
+     @Test
+     public void findUserById() {
+         //given
+         Integer id = 1;
+         User user = new User(id,"Vitaly",UserType.CASUAL);
+         //when
+         Mockito.when(userEntityRepository.findById(id)).thenReturn(Optional.of(user));
+         //then
+         Optional<UserDTO> actualResult = userService.getUserById(id);
+
+         assertThat(actualResult).isPresent().get().extracting("id").isEqualTo(id);
 
      }
 
  }
+ }
 
-}
+
+
+
+
