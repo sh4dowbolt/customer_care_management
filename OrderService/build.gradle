@@ -22,6 +22,8 @@ dependencies {
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
     testImplementation 'org.assertj:assertj-core:4.0.0-M1'
+    testImplementation 'org.mockito:mockito-core:2.1.0'
+    testImplementation 'org.mockito:mockito-junit-jupiter:5.16.1'
     annotationProcessor 'org.projectlombok:lombok:1.18.36'
 
     compileOnly 'org.projectlombok:lombok:1.18.36'
@@ -31,4 +33,6 @@ dependencies {
 }
 test {
     useJUnitPlatform()
+    jvmArgs "-javaagent:${classpath.find { it.name.contains("mockito-core") }.absolutePath}"
+
 }

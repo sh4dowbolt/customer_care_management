@@ -25,7 +25,7 @@ class UserEntityMapperTest {
     @Test
     public void shouldMapUserDTOtoUser() {
         //given
-        UserDTO userDTO = new UserDTO("Josh",UserType.CASUAL);
+        UserDTO userDTO = new UserDTO(1,"Josh",UserType.CASUAL);
         //when
         User user = UserEntityMapper.INSTANCE.toUser(userDTO);
         //then

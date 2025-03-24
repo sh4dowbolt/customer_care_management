@@ -9,6 +9,7 @@ import lombok.*;
 @Data
 @Builder
 @AllArgsConstructor
+@EqualsAndHashCode
 public class User {
 
     @Id
