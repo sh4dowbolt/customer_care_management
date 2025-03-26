@@ -2,7 +2,7 @@ package com.suraev.service;
 
 import com.suraev.dto.UserDTO;
 import com.suraev.entity.User;
-import com.suraev.repository.UserEntityRepository;
+import com.suraev.repository.UserRepository;
 import com.suraev.util.UserEntityMapper;
 import org.springframework.stereotype.Service;
 
@@ -13,12 +13,12 @@ import java.util.stream.Collectors;
 @Service
 public class UserServiceImpl implements UserService {
 
-    private UserEntityRepository userEntityRepository;
+    private UserRepository userRepository;
 
     @Override
     public List<UserDTO> getAllUsers() {
 
-        List<User> usersFromDB = userEntityRepository.findAll();
+        List<User> usersFromDB = userRepository.findAll();
 
         return usersFromDB
                 .stream().map(UserEntityMapper.INSTANCE::toUserDTO)
@@ -29,19 +29,19 @@ public class UserServiceImpl implements UserService {
     public UserDTO createUser(UserDTO userDTO) {
 
         final var user = UserEntityMapper.INSTANCE.toUser(userDTO);
-        User userToDB = userEntityRepository.save(user);
+        User userToDB = userRepository.save(user);
         return UserEntityMapper.INSTANCE.toUserDTO(userToDB);
     }
 
     @Override
     public Optional<UserDTO> getUserById(Integer id) {
-        return userEntityRepository.findById(id).map(UserEntityMapper.INSTANCE::toUserDTO);
+        return userRepository.findById(id).map(UserEntityMapper.INSTANCE::toUserDTO);
     }
 
     @Override
     public boolean deleteUser(Integer id) {
-        if(userEntityRepository.existsById(id)) {
-            userEntityRepository.deleteById(id);
+        if(userRepository.existsById(id)) {
+            userRepository.deleteById(id);
             return true;
         }
         return false;

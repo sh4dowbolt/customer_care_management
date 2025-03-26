@@ -3,7 +3,7 @@ package com.suraev.service;
 import com.suraev.dto.UserDTO;
 import com.suraev.entity.User;
 import com.suraev.entity.enums.UserType;
-import com.suraev.repository.UserEntityRepository;
+import com.suraev.repository.UserRepository;
 import com.suraev.util.UserEntityMapper;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -25,7 +25,7 @@ import static org.mockito.Mockito.atLeastOnce;
 class UserServiceImplTest {
 
     @Mock
-    UserEntityRepository userEntityRepository;
+    UserRepository userRepository;
     @InjectMocks
     UserServiceImpl userService;
 
@@ -40,7 +40,7 @@ class UserServiceImplTest {
                  new User(1, "Vitaly", UserType.CASUAL),
                  new User(2, "Dmitry", UserType.VIP));
          //when
-         Mockito.when(userEntityRepository.findAll()).thenReturn(usersList);
+         Mockito.when(userRepository.findAll()).thenReturn(usersList);
          List<UserDTO> usersDTOlist = userService.getAllUsers();
          //then
 
@@ -53,7 +53,7 @@ class UserServiceImplTest {
                                 .map(entity -> tuple(entity.getId(), entity.getName(), entity.getType()))
                                 .toList()
                 ),
-                () -> Mockito.verify(userEntityRepository, Mockito.atLeast(1)).findAll());
+                () -> Mockito.verify(userRepository, Mockito.atLeast(1)).findAll());
      }
  }
 
@@ -67,7 +67,7 @@ class UserServiceImplTest {
          UserDTO userDTO = new UserDTO(1, "Michael", UserType.CASUAL);
          User user = UserEntityMapper.INSTANCE.toUser(userDTO);
          //when
-         Mockito.when(userEntityRepository.save(user)).thenReturn(user);
+         Mockito.when(userRepository.save(user)).thenReturn(user);
          //then
          UserDTO result = userService.createUser(userDTO);
 
@@ -85,7 +85,7 @@ class UserServiceImplTest {
          Integer id = 1;
          User user = new User(id,"Vitaly",UserType.CASUAL);
          //when
-         Mockito.when(userEntityRepository.findById(id)).thenReturn(Optional.of(user));
+         Mockito.when(userRepository.findById(id)).thenReturn(Optional.of(user));
          //then
          Optional<UserDTO> actualResult = userService.getUserById(id);
 
@@ -101,11 +101,11 @@ class UserServiceImplTest {
          //given
          Integer id=1;
          //when
-         Mockito.when(userEntityRepository.existsById(id)).thenReturn(true);
-         userEntityRepository.deleteById(id);
+         Mockito.when(userRepository.existsById(id)).thenReturn(true);
+         userRepository.deleteById(id);
          //then
          boolean actualResult = userService.deleteUser(id);
-         Mockito.verify(userEntityRepository, atLeastOnce()).deleteById(id);
+         Mockito.verify(userRepository, atLeastOnce()).deleteById(id);
          assertThat(actualResult).isTrue();
      }
      @Test
@@ -113,11 +113,11 @@ class UserServiceImplTest {
          //given
          Integer id=2;
          //when
-         Mockito.when(userEntityRepository.existsById(id)).thenReturn(false);
-         userEntityRepository.deleteById(id);
+         Mockito.when(userRepository.existsById(id)).thenReturn(false);
+         userRepository.deleteById(id);
          //then
          boolean actualResult = userService.deleteUser(id);
-         Mockito.verify(userEntityRepository, atLeastOnce()).deleteById(id);
+         Mockito.verify(userRepository, atLeastOnce()).deleteById(id);
          assertThat(actualResult).isFalse();
      }
  }
