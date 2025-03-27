@@ -2,9 +2,11 @@ package com.suraev.service;
 
 import com.suraev.dto.ProductDTO;
 import com.suraev.repository.ProductRepository;
+import com.suraev.util.ProductMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -14,7 +16,9 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<ProductDTO> getAllProducts() {
 
-        return productRepository.findAll().stream().map();
+        return productRepository.findAll().stream()
+                .map(ProductMapper.INSTANCE::toDto)
+                .collect(Collectors.toList());
     }
 
     @Override
