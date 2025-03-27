@@ -4,7 +4,7 @@ import com.suraev.dto.UserDTO;
 import com.suraev.entity.User;
 import com.suraev.entity.enums.UserType;
 import com.suraev.repository.UserRepository;
-import com.suraev.util.UserEntityMapper;
+import com.suraev.util.UserMapper;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -65,7 +65,7 @@ class UserServiceImplTest {
 
          //given
          UserDTO userDTO = new UserDTO(1, "Michael", UserType.CASUAL);
-         User user = UserEntityMapper.INSTANCE.toUser(userDTO);
+         User user = UserMapper.INSTANCE.toUser(userDTO);
          //when
          Mockito.when(userRepository.save(user)).thenReturn(user);
          //then

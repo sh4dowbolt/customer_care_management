@@ -9,9 +9,9 @@ import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING)
-public interface UserEntityMapper {
+public interface UserMapper {
 
-    UserEntityMapper INSTANCE = Mappers.getMapper(UserEntityMapper.class);
+    UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 
     UserDTO toUserDTO(User user);
 

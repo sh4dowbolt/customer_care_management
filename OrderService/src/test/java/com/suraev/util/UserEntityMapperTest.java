@@ -15,7 +15,7 @@ class UserEntityMapperTest {
         //given
         User user = new User(1, "Michael", UserType.CASUAL);
         //when
-        UserDTO userDTO = UserEntityMapper.INSTANCE.toUserDTO(user);
+        UserDTO userDTO = UserMapper.INSTANCE.toUserDTO(user);
         //then
         assertThat(userDTO.name()).isEqualTo("Michael");
         assertThat(userDTO.type()).isEqualTo(UserType.CASUAL);
@@ -27,7 +27,7 @@ class UserEntityMapperTest {
         //given
         UserDTO userDTO = new UserDTO(1,"Josh",UserType.CASUAL);
         //when
-        User user = UserEntityMapper.INSTANCE.toUser(userDTO);
+        User user = UserMapper.INSTANCE.toUser(userDTO);
         //then
         assertThat(user.getName()).isEqualTo("Josh");
         assertThat(user.getType()).isEqualTo(UserType.CASUAL);

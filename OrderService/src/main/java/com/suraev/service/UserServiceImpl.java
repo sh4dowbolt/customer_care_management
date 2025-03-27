@@ -3,7 +3,7 @@ package com.suraev.service;
 import com.suraev.dto.UserDTO;
 import com.suraev.entity.User;
 import com.suraev.repository.UserRepository;
-import com.suraev.util.UserEntityMapper;
+import com.suraev.util.UserMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,21 +21,21 @@ public class UserServiceImpl implements UserService {
         List<User> usersFromDB = userRepository.findAll();
 
         return usersFromDB
-                .stream().map(UserEntityMapper.INSTANCE::toUserDTO)
+                .stream().map(UserMapper.INSTANCE::toUserDTO)
                 .collect(Collectors.toList());
     }
 
     @Override
     public UserDTO createUser(UserDTO userDTO) {
 
-        final var user = UserEntityMapper.INSTANCE.toUser(userDTO);
+        final var user = UserMapper.INSTANCE.toUser(userDTO);
         User userToDB = userRepository.save(user);
-        return UserEntityMapper.INSTANCE.toUserDTO(userToDB);
+        return UserMapper.INSTANCE.toUserDTO(userToDB);
     }
 
     @Override
     public Optional<UserDTO> getUserById(Integer id) {
-        return userRepository.findById(id).map(UserEntityMapper.INSTANCE::toUserDTO);
+        return userRepository.findById(id).map(UserMapper.INSTANCE::toUserDTO);
     }
 
     @Override
