@@ -12,38 +12,38 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequestMapping(value = "/users")
 @RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;
 
-    @GetMapping(value = "/users", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<UserDTO> getAllUsers() {
 
         return userService.getAllUsers();
     }
 
-    @PostMapping("/create-user")
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO) {
 
         UserDTO user = userService.createUser(userDTO);
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 
-    @GetMapping("/get-user/{id}")
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<UserDTO> getUserById(@PathVariable Integer id) {
+
         Optional<UserDTO> user = userService.getUserById(id);
         return user.map(dto -> new ResponseEntity<>(user.get(), HttpStatus.FOUND))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @DeleteMapping("/delete-user/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Integer id) {
-        userService.deleteUser(id);
-        return ResponseEntity.notFound().build();
+
+        boolean deleteResult = userService.deleteUser(id);
+        return deleteResult ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
+                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
-
-
-
-
 }

@@ -3,8 +3,6 @@ package com.suraev.service;
 import com.suraev.dto.ProductDTO;
 import com.suraev.entity.Product;
 import com.suraev.repository.ProductRepository;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -13,7 +11,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.mockito.verification.VerificationMode;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -21,7 +18,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 @ExtendWith(MockitoExtension.class)
 class ProductServiceImplTest {
@@ -124,11 +121,6 @@ class ProductServiceImplTest {
             );
         }
     }
-
-
-
-
-
     }
 
 }
