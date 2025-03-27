@@ -1,11 +1,13 @@
 package com.suraev.service;
 
 import com.suraev.dto.ProductDTO;
+import com.suraev.entity.Product;
 import com.suraev.repository.ProductRepository;
 import com.suraev.util.ProductMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -22,13 +24,17 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductDTO getProductById(Integer id) {
-        return null;
+    public Optional<ProductDTO> getProductById(Integer id) {
+      return productRepository.findById(id).map(ProductMapper.INSTANCE::toDto);
     }
 
     @Override
     public ProductDTO createProduct(ProductDTO productDTO) {
-        return null;
+
+        final var productToSave=ProductMapper.INSTANCE.toProduct(productDTO);
+        Product productFromDB = productRepository.save(productToSave);
+
+        return ProductMapper.INSTANCE.toDto(productFromDB);
     }
 
     @Override

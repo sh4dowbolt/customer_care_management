@@ -1,9 +1,7 @@
 package com.suraev.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.math.BigDecimal;
 
@@ -11,6 +9,7 @@ import java.math.BigDecimal;
 @Table(name = "products")
 @Getter
 @Setter
+@Data
 @AllArgsConstructor
 public class Product {
 
