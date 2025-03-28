@@ -1,6 +1,9 @@
 package com.suraev.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -9,6 +12,8 @@ import java.time.Instant;
 
 @Entity
 @Table(name = "orders")
+@Data
+@Builder
 public class Order {
 
     @Id
