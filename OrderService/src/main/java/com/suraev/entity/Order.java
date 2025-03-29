@@ -1,6 +1,7 @@
 package com.suraev.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,7 @@ import java.time.Instant;
 @Table(name = "orders")
 @Data
 @Builder
+@AllArgsConstructor
 public class Order {
 
     @Id

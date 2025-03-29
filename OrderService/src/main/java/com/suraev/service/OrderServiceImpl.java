@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.jaxb.SpringDataJaxb;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,7 +45,7 @@ public class OrderServiceImpl implements OrderService {
         if(!userRepository.existsById(userId)) {
             throw new UserNotFoundException("User not found");
         }
-        if(!productRepository.existsById(userId)) {
+        if(!productRepository.existsById(productID)) {
             throw new ProductNotFoundException("Product not found");
         }
         final var user = userRepository.findById(userId).get();
@@ -52,6 +53,7 @@ public class OrderServiceImpl implements OrderService {
 
 
         Order order = OrderMapper.INSTANCE.toOrder(orderDTO);
+
         Order orderFromDB = orderRepository.save(order);
 
         return OrderMapper.INSTANCE.toDto(orderFromDB);

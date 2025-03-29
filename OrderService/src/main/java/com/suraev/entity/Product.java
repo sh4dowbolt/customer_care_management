@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @Data
+@Builder
 @AllArgsConstructor
 public class Product {
 
