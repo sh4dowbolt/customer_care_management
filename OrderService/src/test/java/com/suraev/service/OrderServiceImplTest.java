@@ -24,8 +24,9 @@ import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class OrderServiceImplTest {
@@ -52,7 +53,7 @@ class OrderServiceImplTest {
             //given
             var orderDTO = getOrderDTO();
             //when
-            Mockito.when(userRepository.existsById(orderDTO.userId())).thenReturn(false);
+            when(userRepository.existsById(orderDTO.userId())).thenReturn(false);
             //then
             assertThrows(UserNotFoundException.class, () -> orderServiceImpl.createOrder(orderDTO));
         }
@@ -62,8 +63,8 @@ class OrderServiceImplTest {
             //given
             var orderDTO = getOrderDTO();
             //when
-            Mockito.when(userRepository.existsById(orderDTO.userId())).thenReturn(true);
-            Mockito.when(productRepository.existsById(orderDTO.productId())).thenReturn(false);
+            when(userRepository.existsById(orderDTO.userId())).thenReturn(true);
+            when(productRepository.existsById(orderDTO.productId())).thenReturn(false);
             //then
             assertThrows(ProductNotFoundException.class, () -> orderServiceImpl.createOrder(orderDTO));
         }
@@ -71,27 +72,32 @@ class OrderServiceImplTest {
         public void setPriceAndSave() {
             //given
             var orderDTO = getOrderDTO();
-            BigDecimal totalPriceToSet= BigDecimal.valueOf(100);
-            Optional<User> user = Optional.of(User.builder().id(1).name("Vitaly").type(UserType.CASUAL).build());
-            Optional<Product> product = Optional.of(Product.builder().id(1).price(new BigDecimal(100)).category("casual").build());
-            Order order = new Order(1,user.get(),product.get(),totalPriceToSet, Instant.now());
-
+            var totalPriceToSet= BigDecimal.valueOf(100);
+            var user = Optional.of(User.builder().id(1).name("Vitaly").type(UserType.CASUAL).build());
+            var product = Optional.of(Product.builder().id(1).price(new BigDecimal(100)).category("casual").build());
+            var orderToSave = new Order(1,user.get(),product.get(),totalPriceToSet, Instant.now());
+            var userId = orderDTO.userId();
+            var productId = orderDTO.productId();
             //when
-            Mockito.when(userRepository.existsById(orderDTO.userId())).thenReturn(true);
-            Mockito.when(productRepository.existsById(orderDTO.productId())).thenReturn(true);
+            when(userRepository.existsById(userId)).thenReturn(true);
+            when(productRepository.existsById(productId)).thenReturn(true);
 
+            when(userRepository.findById(userId)).thenReturn(user);
+            when(productRepository.findById(productId)).thenReturn(product);
 
-            Mockito.when(userRepository.findById(orderDTO.userId())).thenReturn(user);
-            Mockito.when(productRepository.findById(orderDTO.productId())).thenReturn(product);
-
-
-            Mockito.doReturn(order).when(orderRepository).save(ArgumentMatchers.any(Order.class));
-
-
+            doReturn(orderToSave).when(orderRepository).save(any(Order.class));
             //then
             OrderDTO actualResult = orderServiceImpl.createOrder(orderDTO);
 
-            assertNotNull(actualResult);
+            assertAll(
+                        () -> assertNotNull(actualResult),
+                        () -> assertEquals(actualResult.userId(),user.get().getId()),
+                        () -> verify(orderRepository, times(1)).save(any(Order.class)),
+                        () -> verify(userRepository, times(1)).findById(userId),
+                        () -> verify(userRepository, times(1)).existsById(userId),
+                        () -> verify(productRepository, times(1)).existsById(productId),
+                        () -> verify(productRepository, times(1)).findById(productId)
+            );
 
         }
 
