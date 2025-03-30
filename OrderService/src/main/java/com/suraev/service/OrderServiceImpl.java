@@ -1,6 +1,7 @@
 package com.suraev.service;
 
 import com.suraev.dto.OrderDTO;
+import com.suraev.entity.DiscountRequest;
 import com.suraev.entity.Order;
 import com.suraev.entity.Product;
 import com.suraev.entity.User;
@@ -50,6 +51,8 @@ public class OrderServiceImpl implements OrderService {
         }
         final var user = userRepository.findById(userId).get();
         final var product = productRepository.findById(productID).get();
+
+        DiscountRequest discountRequest
 
 
         Order order = OrderMapper.INSTANCE.toOrder(orderDTO);

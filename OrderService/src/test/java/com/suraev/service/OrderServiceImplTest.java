@@ -98,7 +98,6 @@ class OrderServiceImplTest {
                         () -> verify(productRepository, times(1)).existsById(productId),
                         () -> verify(productRepository, times(1)).findById(productId)
             );
-
         }
 
         private static OrderDTO getOrderDTO() {
