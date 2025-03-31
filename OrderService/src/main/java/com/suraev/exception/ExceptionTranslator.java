@@ -21,17 +21,17 @@ public class ExceptionTranslator {
         return new ResponseEntity<>(createErrorResponse(HttpStatus.BAD_REQUEST),HttpStatus.BAD_REQUEST);
     }
     @ExceptionHandler
-    ResponseEntity<Problem> handleProductNotFoundException(BadRequestAlertException exception) {
+    ResponseEntity<Problem> handleProductNotFoundException(ProductNotFoundException exception) {
 
         return new ResponseEntity<>(createErrorResponse(HttpStatus.NOT_FOUND),HttpStatus.NOT_FOUND);
     }
     @ExceptionHandler
-    ResponseEntity<Problem> handleUserNotFoundException(BadRequestAlertException exception) {
+    ResponseEntity<Problem> handleUserNotFoundException(UserNotFoundException exception) {
 
         return new ResponseEntity<>(createErrorResponse(HttpStatus.NOT_FOUND),HttpStatus.NOT_FOUND);
     }
 
-    Problem createErrorResponse(HttpStatus status) {
+    private Problem createErrorResponse(HttpStatus status) {
         return Problem.builder().title(applicationName)
                 .status(status.toString()).code(status.value()).generatedAt(Instant.now())
                 .build();

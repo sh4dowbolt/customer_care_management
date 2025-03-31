@@ -10,6 +10,7 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @EqualsAndHashCode
+@Entity
 public class User {
 
     @Id
@@ -21,6 +22,7 @@ public class User {
     private String name;
 
     @Column(name = "type", nullable = false)
+    @Enumerated(value = EnumType.STRING)
     private UserType type;
 
 }

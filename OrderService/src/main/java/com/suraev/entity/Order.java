@@ -26,12 +26,12 @@ public class Order {
 
     @ManyToOne(fetch = FetchType.LAZY,optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @Column(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @Column(name = "product_id")
+    @JoinColumn(name = "product_id")
     private Product product;
 
     @Column(name = "total_price", nullable = false, precision = 10, scale = 2)
