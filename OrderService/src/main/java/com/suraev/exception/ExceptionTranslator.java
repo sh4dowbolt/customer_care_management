@@ -23,12 +23,12 @@ public class ExceptionTranslator {
     @ExceptionHandler
     ResponseEntity<Problem> handleProductNotFoundException(BadRequestAlertException exception) {
 
-        return new ResponseEntity<>(createErrorResponse(HttpStatus.NOT_FOUND),HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(createErrorResponse(HttpStatus.NOT_FOUND),HttpStatus.NOT_FOUND);
     }
     @ExceptionHandler
     ResponseEntity<Problem> handleUserNotFoundException(BadRequestAlertException exception) {
 
-        return new ResponseEntity<>(createErrorResponse(HttpStatus.NOT_FOUND),HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(createErrorResponse(HttpStatus.NOT_FOUND),HttpStatus.NOT_FOUND);
     }
 
     Problem createErrorResponse(HttpStatus status) {
