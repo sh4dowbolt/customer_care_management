@@ -1,10 +1,8 @@
 package com.suraev.service;
 
 import com.suraev.dto.OrderDTO;
-import com.suraev.entity.DiscountRequest;
+import com.suraev.dto.ProductDTO;
 import com.suraev.entity.Order;
-import com.suraev.entity.Product;
-import com.suraev.entity.User;
 import com.suraev.exception.ProductNotFoundException;
 import com.suraev.exception.UserNotFoundException;
 import com.suraev.repository.OrderRepository;
@@ -12,10 +10,9 @@ import com.suraev.repository.ProductRepository;
 import com.suraev.repository.UserRepository;
 import com.suraev.util.OrderMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.jaxb.SpringDataJaxb;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,7 +41,7 @@ public class OrderServiceImpl implements OrderService {
         final var userId = orderDTO.userId();
 
         if(!userRepository.existsById(userId)) {
-            throw new UserNotFoundException("User not found");
+            throw new UserNotFoundException("User not found", HttpStatus.BAD_REQUEST);
         }
         if(!productRepository.existsById(productID)) {
             throw new ProductNotFoundException("Product not found");
@@ -52,7 +49,7 @@ public class OrderServiceImpl implements OrderService {
         final var user = userRepository.findById(userId).get();
         final var product = productRepository.findById(productID).get();
 
-        DiscountRequest discountRequest
+        //ProductDTO.DiscountRequest discountRequest
 
 
         Order order = OrderMapper.INSTANCE.toOrder(orderDTO);
