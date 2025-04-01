@@ -17,7 +17,7 @@
     - [x] DTO's
     - [80%] TEST MODULES
     - [90%] Services
-  - [ ] DiscountService
+ - [ ] DiscountService
     - [ ] Dependencies
     - [ ] ENTITIES
     - [ ] DTO's
