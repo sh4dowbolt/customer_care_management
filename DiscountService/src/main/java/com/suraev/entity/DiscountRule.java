@@ -1,5 +1,6 @@
 package com.suraev.entity;
 
+import com.suraev.entity.enums.DiscountType;
 import com.suraev.entity.enums.ProductCategory;
 import com.suraev.entity.enums.UserType;
 import jakarta.persistence.*;
@@ -20,18 +21,18 @@ public class DiscountRule {
     @Enumerated(value = EnumType.STRING)
     private UserType userType;
 
-    @Column(name = "product_category")
+    @Column(name = "product_category", nullable = false)
     @Enumerated(value = EnumType.STRING)
     private ProductCategory productCategory;
 
-    @Column(name = "min_order_amount")
+    @Column(name = "min_order_amount",precision = 10, scale = 2)
     private BigDecimal minOrderPrice;
-
-    @Column(name = "max_order_amount")
-    private BigDecimal maxOrderPrice;
 
     @Column(name = "discount_value")
     private BigDecimal discountValue;
+
+    @Column(name = "discount_type", nullable = false, length = 20)
+    private DiscountType discountType;
     @Column(name = "create_date")
     private Instant createdAt;
 
