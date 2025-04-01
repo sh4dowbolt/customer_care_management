@@ -1,3 +1,4 @@
 rootProject.name = 'custom_care_management'
 include 'OrderService'
+include 'DiscountService'
 
