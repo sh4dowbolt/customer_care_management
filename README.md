@@ -11,12 +11,18 @@
 4. ServerRegistry
 
 ## TODO / PROGRESS
-- [ ] OrderService
+- [90%] OrderService
     - [x] Dependencies
     - [x] ENTITIES
     - [x] DTO's
     - [80%] TEST MODULES
     - [90%] Services
+ - [ ] DiscountService
+    - [ ] Dependencies
+    - [ ] ENTITIES
+    - [ ] DTO's
+    - [ ] TEST MODULES
+    - [ ] Services
 ## STACK
 * Java SE 21
 * Spring Boot 3
