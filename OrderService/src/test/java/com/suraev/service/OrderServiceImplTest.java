@@ -4,6 +4,7 @@ import com.suraev.dto.OrderDTO;
 import com.suraev.entity.Order;
 import com.suraev.entity.Product;
 import com.suraev.entity.User;
+import com.suraev.entity.enums.ProductCategory;
 import com.suraev.entity.enums.UserType;
 import com.suraev.exception.ProductNotFoundException;
 import com.suraev.exception.UserNotFoundException;
@@ -73,8 +74,9 @@ class OrderServiceImplTest {
             //given
             var orderDTO = getOrderDTO();
             var totalPriceToSet= BigDecimal.valueOf(100);
-            var user = Optional.of(User.builder().id(1).name("Vitaly").type(UserType.CASUAL).build());
-            var product = Optional.of(Product.builder().id(1).price(new BigDecimal(100)).category("casual").build());
+            var user = Optional.of(User.builder().id(1).name("Vitaly").type(UserType.INDIVIDUAL).build());
+            var product = Optional.of(Product.builder().id(1).price(new BigDecimal(100))
+                    .category(ProductCategory.ANY).build());
             var orderToSave = new Order(1,user.get(),product.get(),totalPriceToSet, Instant.now());
             var userId = orderDTO.userId();
             var productId = orderDTO.productId();

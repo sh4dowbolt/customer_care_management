@@ -28,7 +28,7 @@ class OrderMapperTest {
     @Test
     public void shouldMapToOrderDTO() {
         //given
-        Order order = Order.builder().id(1).user(new User(1,"Denis", UserType.CASUAL)).build();
+        Order order = Order.builder().id(1).user(new User(1,"Denis", UserType.INDIVIDUAL)).build();
         //when
         OrderDTO actualResult = OrderMapper.INSTANCE.toDto(order);
         //then

@@ -2,6 +2,7 @@ package com.suraev.util;
 
 import com.suraev.dto.ProductDTO;
 import com.suraev.entity.Product;
+import com.suraev.entity.enums.ProductCategory;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -15,7 +16,7 @@ class ProductMapperTest {
     @Test
     public void mapToProduct() {
         //given
-        ProductDTO productDTO = new ProductDTO(1,"Viktor",new BigDecimal(100),"conquest");
+        ProductDTO productDTO = new ProductDTO(1,"Viktor",new BigDecimal(100), ProductCategory.ANY);
         //when
         Product actualResult = ProductMapper.INSTANCE.toProduct(productDTO);
         //then
@@ -24,7 +25,7 @@ class ProductMapperTest {
     @Test
     public void mapToProductDTO() {
         //given
-        Product product = new Product(1,"Viktor",new BigDecimal(100),"conquest");
+        Product product = new Product(1,"Viktor",new BigDecimal(100),ProductCategory.ANY);
         //when
         ProductDTO actualResult = ProductMapper.INSTANCE.toDto(product);
         //then

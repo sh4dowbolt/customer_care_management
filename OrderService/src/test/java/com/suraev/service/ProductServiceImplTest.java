@@ -2,6 +2,7 @@ package com.suraev.service;
 
 import com.suraev.dto.ProductDTO;
 import com.suraev.entity.Product;
+import com.suraev.entity.enums.ProductCategory;
 import com.suraev.repository.ProductRepository;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Nested;
@@ -39,8 +40,8 @@ class ProductServiceImplTest {
         @Test
         public void getAll() {
             //given
-            List<Product> products = List.of(new Product(1,"Vitaly",new BigDecimal(100), "usual"),
-                                            new Product(2,"Dmitry",new BigDecimal(10), "usual"));
+            List<Product> products = List.of(new Product(1,"Vitaly",new BigDecimal(100), ProductCategory.ANY),
+                                            new Product(2,"Dmitry",new BigDecimal(10), ProductCategory.ANY));
             //when
             Mockito.when(productRepository.findAll()).thenReturn(products);
             //then
@@ -60,7 +61,7 @@ class ProductServiceImplTest {
         public void getProductIfExist() {
             //given
             Integer existedProductId=1;
-            Product product= new Product(1,"Dmitry", new BigDecimal(100), "usual");
+            Product product= new Product(1,"Dmitry", new BigDecimal(100), ProductCategory.ANY);
 
             //when
             Mockito.when(productRepository.findById(existedProductId)).thenReturn(Optional.of(product));
@@ -90,9 +91,9 @@ class ProductServiceImplTest {
         @Test
         public void create() {
             //given
-            ProductDTO productDTO = new ProductDTO(2, "Dmitry",new BigDecimal(100),"usual");
-            Product product = new Product(2, "Dmitry",new BigDecimal(100),"usual");
-            Product newProductFromDB = new Product(3, "Dmitry",new BigDecimal(100),"usual");
+            ProductDTO productDTO = new ProductDTO(2, "Dmitry",new BigDecimal(100), ProductCategory.ANY);
+            Product product = new Product(2, "Dmitry",new BigDecimal(100),ProductCategory.ANY);
+            Product newProductFromDB = new Product(3, "Dmitry",new BigDecimal(100),ProductCategory.ANY);
             //when
             Mockito.when(productRepository.save(product)).thenReturn(newProductFromDB);
             //then

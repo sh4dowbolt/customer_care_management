@@ -1,5 +1,6 @@
 package com.suraev.entity;
 
+import com.suraev.entity.enums.ProductCategory;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -26,6 +27,7 @@ public class Product {
     private BigDecimal price;
 
     @Column(name = "category")
-    private String category;
+    @Enumerated(value = EnumType.STRING)
+    private ProductCategory category;
 
 }

@@ -37,8 +37,8 @@ class UserServiceImplTest {
 
          //given
          List<User> usersList = List.of(
-                 new User(1, "Vitaly", UserType.CASUAL),
-                 new User(2, "Dmitry", UserType.VIP));
+                 new User(1, "Vitaly", UserType.INDIVIDUAL),
+                 new User(2, "Dmitry", UserType.INDIVIDUAL));
          //when
          Mockito.when(userRepository.findAll()).thenReturn(usersList);
          List<UserDTO> usersDTOlist = userService.getAllUsers();
@@ -64,7 +64,7 @@ class UserServiceImplTest {
      public void createUserInDb() {
 
          //given
-         UserDTO userDTO = new UserDTO(1, "Michael", UserType.CASUAL);
+         UserDTO userDTO = new UserDTO(1, "Michael", UserType.INDIVIDUAL);
          User user = UserMapper.INSTANCE.toUser(userDTO);
          //when
          Mockito.when(userRepository.save(user)).thenReturn(user);
@@ -83,7 +83,7 @@ class UserServiceImplTest {
      public void findUserById() {
          //given
          Integer id = 1;
-         User user = new User(id,"Vitaly",UserType.CASUAL);
+         User user = new User(id,"Vitaly",UserType.INDIVIDUAL);
          //when
          Mockito.when(userRepository.findById(id)).thenReturn(Optional.of(user));
          //then

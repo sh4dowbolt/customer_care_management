@@ -13,24 +13,24 @@ class UserMapperTest {
     @Test
     public void shouldMapUserToUserDTO() {
         //given
-        User user = new User(1, "Michael", UserType.CASUAL);
+        User user = new User(1, "Michael", UserType.INDIVIDUAL);
         //when
         UserDTO userDTO = UserMapper.INSTANCE.toUserDTO(user);
         //then
         assertThat(userDTO.name()).isEqualTo("Michael");
-        assertThat(userDTO.type()).isEqualTo(UserType.CASUAL);
+        assertThat(userDTO.type()).isEqualTo(UserType.INDIVIDUAL);
 
     }
 
     @Test
     public void shouldMapUserDTOtoUser() {
         //given
-        UserDTO userDTO = new UserDTO(1,"Josh",UserType.CASUAL);
+        UserDTO userDTO = new UserDTO(1,"Josh",UserType.INDIVIDUAL);
         //when
         User user = UserMapper.INSTANCE.toUser(userDTO);
         //then
         assertThat(user.getName()).isEqualTo("Josh");
-        assertThat(user.getType()).isEqualTo(UserType.CASUAL);
+        assertThat(user.getType()).isEqualTo(UserType.INDIVIDUAL);
     }
 
 }
