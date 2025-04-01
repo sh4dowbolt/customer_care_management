@@ -12,9 +12,9 @@
 
 ## TODO / PROGRESS
 - [ ] OrderService
-    - [*] Dependencies
-    - [*] ENTITIES
-    - [*] DTO's
+    - [x] Dependencies
+    - [x] ENTITIES
+    - [x] DTO's
     - [80%] TEST MODULES
     - [90%] Services
 ## STACK
