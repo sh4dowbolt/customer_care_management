@@ -12,16 +12,16 @@
 
 ## TODO / PROGRESS
 - [ ] OrderService
-    - [ ] Dependencies
-    - [ ] ENTITIES
-    - [ ] DTO's
-    - [ ] TEST MODULES
-    - [ ] Services
+    - [x] Dependencies
+    - [x] ENTITIES
+    - [x] DTO's
+    - [80%] TEST MODULES
+    - [90%] Services
 ## STACK
 * Java SE 21
 * Spring Boot 3
 * Hibernate
-* Maven
+* Gradle
 * PostgreSQL
 * JUnit5
 * RabbitMQ
