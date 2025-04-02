@@ -2,7 +2,6 @@ package com.suraev.service;
 
 import com.suraev.dto.DiscountRequest;
 import com.suraev.dto.OrderDTO;
-import com.suraev.dto.ProductDTO;
 import com.suraev.entity.Order;
 import com.suraev.exception.ProductNotFoundException;
 import com.suraev.exception.UserNotFoundException;
@@ -12,8 +11,11 @@ import com.suraev.repository.UserRepository;
 import com.suraev.util.OrderMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClient;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,9 +23,10 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
 
-    private UserRepository userRepository;
-    private ProductRepository productRepository;
-    private OrderRepository orderRepository;
+    private final UserRepository userRepository;
+    private final ProductRepository productRepository;
+    private final OrderRepository orderRepository;
+    private final RestClient restClient;
 
     @Override
     public List<OrderDTO> getAllOrders() {
@@ -50,10 +53,14 @@ public class OrderServiceImpl implements OrderService {
         final var user = userRepository.findById(userId).get();
         final var product = productRepository.findById(productID).get();
 
-        DiscountRequest.builder().userType(user.getType())
+        DiscountRequest request = DiscountRequest.builder().userType(user.getType())
                 .productCategory(product.getCategory())
-                .price(product.getPrice());
+                .price(product.getPrice()).build();
 
+        BigDecimal discount = restClient.post().contentType(MediaType.APPLICATION_JSON)
+                .body(request)
+                .retrieve()
+                .body(BigDecimal.class);
 
 
         Order order = OrderMapper.INSTANCE.toOrder(orderDTO);
