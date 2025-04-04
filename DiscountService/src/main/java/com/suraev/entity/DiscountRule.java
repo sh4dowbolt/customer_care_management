@@ -39,6 +39,7 @@ public class DiscountRule {
 
     @Column(name = "discount_type", nullable = false, length = 20)
     private DiscountType discountType;
+
     @Column(name = "create_date")
     private Instant createdAt;
 
