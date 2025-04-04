@@ -9,11 +9,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 
 public interface DiscountRuleRepository extends JpaRepository<DiscountRule, Integer> {
     @Query(value = "SELECT * FROM DiscountRule dr WHERE dr.userType = %:user" +
             " AND dr.productCategory = %:product AND dr.price >= %:price")
-    BigDecimal getDiscountAmount(@Param("user") UserType userType,
-                                 @Param("product") ProductCategory productCategory,
-                                 @Param("price") BigDecimal price);
+    Optional<DiscountRule> getDiscountAmount(@Param("user") UserType userType,
+                               @Param("product") ProductCategory productCategory,
+                               @Param("price") BigDecimal price);
 }

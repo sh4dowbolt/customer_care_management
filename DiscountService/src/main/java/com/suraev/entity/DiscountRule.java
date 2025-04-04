@@ -4,12 +4,18 @@ import com.suraev.entity.enums.DiscountType;
 import com.suraev.entity.enums.ProductCategory;
 import com.suraev.entity.enums.UserType;
 import jakarta.persistence.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.Instant;
 
 @Entity
 @Table(name = "discount_rules")
+@Builder
+@Getter
+@Setter
 public class DiscountRule {
 
     @Id
