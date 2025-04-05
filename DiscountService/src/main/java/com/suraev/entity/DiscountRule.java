@@ -38,6 +38,7 @@ public class DiscountRule {
     private BigDecimal discountValue;
 
     @Column(name = "discount_type", nullable = false, length = 20)
+    @Enumerated(value = EnumType.STRING)
     private DiscountType discountType;
 
     @Column(name = "create_date")

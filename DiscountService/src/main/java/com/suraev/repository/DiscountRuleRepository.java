@@ -6,12 +6,14 @@ import com.suraev.entity.enums.UserType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
 import java.util.Optional;
 
+@Repository
 public interface DiscountRuleRepository extends JpaRepository<DiscountRule, Integer> {
-    @Query(value = "SELECT * FROM DiscountRule dr WHERE dr.userType = %:user" +
+    @Query(value = "SELECT dr  FROM DiscountRule dr WHERE dr.userType = %:user" +
             " AND dr.productCategory = %:product AND dr.minOrderPrice <= %:price")
     Optional<DiscountRule> getDiscountAmount(@Param("user") UserType userType,
                                @Param("product") ProductCategory productCategory,
