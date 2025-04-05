@@ -1,6 +1,5 @@
 package com.suraev.repository;
 
-import com.suraev.dto.DiscountRequest;
 import com.suraev.entity.DiscountRule;
 import com.suraev.entity.enums.ProductCategory;
 import com.suraev.entity.enums.UserType;
