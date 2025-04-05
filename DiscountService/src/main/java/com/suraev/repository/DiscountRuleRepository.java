@@ -13,9 +13,9 @@ import java.util.Optional;
 
 @Repository
 public interface DiscountRuleRepository extends JpaRepository<DiscountRule, Integer> {
-    @Query(value = "SELECT dr  FROM DiscountRule dr WHERE dr.userType = %:user" +
-            " AND dr.productCategory = %:product AND dr.minOrderPrice <= %:price")
-    Optional<DiscountRule> getDiscountAmount(@Param("user") UserType userType,
-                               @Param("product") ProductCategory productCategory,
+    @Query(value = "SELECT dr  FROM DiscountRule dr WHERE dr.userType = :userType " +
+            "AND dr.productCategory = :productCategory AND dr.minOrderPrice <= :price")
+    Optional<DiscountRule> getDiscountAmount(@Param("userType") UserType userType,
+                               @Param("productCategory") ProductCategory productCategory,
                                @Param("price") BigDecimal price);
 }

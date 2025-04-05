@@ -4,9 +4,7 @@ import com.suraev.entity.enums.DiscountType;
 import com.suraev.entity.enums.ProductCategory;
 import com.suraev.entity.enums.UserType;
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -16,6 +14,8 @@ import java.time.Instant;
 @Builder
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class DiscountRule {
 
     @Id
@@ -31,7 +31,7 @@ public class DiscountRule {
     @Enumerated(value = EnumType.STRING)
     private ProductCategory productCategory;
 
-    @Column(name = "min_order_amount",precision = 10, scale = 2)
+    @Column(name = "min_order_price",precision = 10, scale = 2)
     private BigDecimal minOrderPrice;
 
     @Column(name = "discount_value")
