@@ -64,6 +64,8 @@ public class OrderServiceImpl implements OrderService {
 
 
         Order order = OrderMapper.INSTANCE.toOrder(orderDTO);
+        order.setTotalPrice(discount);
+
 
         Order orderFromDB = orderRepository.save(order);
 

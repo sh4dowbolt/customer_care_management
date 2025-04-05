@@ -3,7 +3,6 @@ server:
   servlet:
     context-path: /api/v1/
 
-
 spring:
     application:
       name: order_service
@@ -17,3 +16,7 @@ spring:
       database-platform: org.hibernate.dialect.PostgreSQLDialect
       hibernate:
         ddl-auto: update
+
+discount:
+  service:
+    url: http://localhost:8081/api/v1/getDiscount

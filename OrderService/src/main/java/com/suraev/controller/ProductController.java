@@ -16,7 +16,7 @@ import java.util.Optional;
 @RequestMapping("/products")
 public class ProductController {
 
-    private ProductService productServiceImpl;
+    private final ProductService productServiceImpl;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<ProductDTO> getAllProducts() {

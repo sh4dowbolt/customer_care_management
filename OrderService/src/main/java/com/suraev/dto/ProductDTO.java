@@ -1,8 +1,6 @@
 package com.suraev.dto;
 
 import com.suraev.entity.enums.ProductCategory;
-import lombok.Builder;
-import lombok.Data;
 
 import java.math.BigDecimal;
 

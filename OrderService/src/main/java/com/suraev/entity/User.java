@@ -11,6 +11,7 @@ import lombok.*;
 @AllArgsConstructor
 @EqualsAndHashCode
 @Entity
+@NoArgsConstructor
 public class User {
 
     @Id
