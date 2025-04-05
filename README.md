@@ -17,12 +17,12 @@
     - [x] DTO's
     - [80%] TEST MODULES
     - [90%] Services
- - [ ] DiscountService
-    - [ ] Dependencies
-    - [ ] ENTITIES
-    - [ ] DTO's
-    - [ ] TEST MODULES
-    - [ ] Services
+ - [80%] DiscountService
+    - [x] Dependencies
+    - [x] ENTITIES
+    - [x] DTO's
+    - [50%] TEST MODULES
+    - [x] Services
 ## STACK
 * Java SE 21
 * Spring Boot 3
