@@ -64,7 +64,10 @@ public class OrderServiceImpl implements OrderService {
 
 
         Order order = OrderMapper.INSTANCE.toOrder(orderDTO);
-        order.setTotalPrice(discount);
+
+        BigDecimal productPriceWithoutDiscount = product.getPrice();
+
+        order.setTotalPrice(productPriceWithoutDiscount.subtract(discount));
 
 
         Order orderFromDB = orderRepository.save(order);
