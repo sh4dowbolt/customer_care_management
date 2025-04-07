@@ -21,6 +21,9 @@ public class DiscountController {
 
     @PostMapping(value = "/getDiscount", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<BigDecimal> getDiscount(@RequestBody DiscountRequest discountRequest) {
-        return new ResponseEntity<>(discountServiceImpl.calculateDiscountAmount(discountRequest).discountAmount(), HttpStatus.OK);
+
+        DiscountResponse discountResponse = discountServiceImpl.calculateDiscountAmount(discountRequest);
+        BigDecimal returnDiscount = discountResponse.discountAmount();
+        return new ResponseEntity<>(returnDiscount, HttpStatus.OK);
     }
 }
