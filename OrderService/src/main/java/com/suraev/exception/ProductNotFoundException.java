@@ -1,7 +1,9 @@
 package com.suraev.exception;
 
+import org.springframework.http.HttpStatus;
+
 public class ProductNotFoundException extends RuntimeException{
-    public ProductNotFoundException(String message) {
+    public ProductNotFoundException(String message, HttpStatus httpStatus) {
         super(message);
     }
 }

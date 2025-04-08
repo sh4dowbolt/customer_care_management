@@ -25,14 +25,10 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 class ProductServiceImplTest {
 
     @InjectMocks
-    static ProductService productService;
+    static ProductServiceImpl productService;
     @Mock
     ProductRepository productRepository;
 
-    @BeforeAll
-    public static void prepareProductService() {
-        productService= new ProductServiceImpl();
-    }
 
     @Nested
     public class getAllProducts {

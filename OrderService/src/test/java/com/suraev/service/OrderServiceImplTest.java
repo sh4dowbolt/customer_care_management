@@ -15,10 +15,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
@@ -33,7 +31,7 @@ import static org.mockito.Mockito.*;
 class OrderServiceImplTest {
 
     @InjectMocks
-    static OrderService orderServiceImpl;
+    static OrderServiceImpl orderService;
     @Mock
     OrderRepository orderRepository;
     @Mock
@@ -41,10 +39,6 @@ class OrderServiceImplTest {
     @Mock
     UserRepository userRepository;
 
-    @BeforeAll
-    public static void setUp() {
-        orderServiceImpl = new OrderServiceImpl();
-    }
 
     @Nested
     public class createOrder {
@@ -56,7 +50,7 @@ class OrderServiceImplTest {
             //when
             when(userRepository.existsById(orderDTO.userId())).thenReturn(false);
             //then
-            assertThrows(UserNotFoundException.class, () -> orderServiceImpl.createOrder(orderDTO));
+            assertThrows(UserNotFoundException.class, () -> orderService.createOrder(orderDTO));
         }
 
         @Test
@@ -67,7 +61,7 @@ class OrderServiceImplTest {
             when(userRepository.existsById(orderDTO.userId())).thenReturn(true);
             when(productRepository.existsById(orderDTO.productId())).thenReturn(false);
             //then
-            assertThrows(ProductNotFoundException.class, () -> orderServiceImpl.createOrder(orderDTO));
+            assertThrows(ProductNotFoundException.class, () -> orderService.createOrder(orderDTO));
         }
         @Test
         public void setPriceAndSave() {
@@ -89,7 +83,7 @@ class OrderServiceImplTest {
 
             doReturn(orderToSave).when(orderRepository).save(any(Order.class));
             //then
-            OrderDTO actualResult = orderServiceImpl.createOrder(orderDTO);
+            OrderDTO actualResult = orderService.createOrder(orderDTO);
 
             assertAll(
                         () -> assertNotNull(actualResult),

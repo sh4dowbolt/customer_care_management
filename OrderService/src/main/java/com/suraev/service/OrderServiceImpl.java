@@ -28,6 +28,7 @@ public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final RestClient restClient;
 
+
     @Override
     public List<OrderDTO> getAllOrders() {
         return List.of();
@@ -44,35 +45,56 @@ public class OrderServiceImpl implements OrderService {
         final var productID = orderDTO.productId();
         final var userId = orderDTO.userId();
 
-        if(!userRepository.existsById(userId)) {
+        if(!isUserExists(userId)) {
             throw new UserNotFoundException("User not found", HttpStatus.BAD_REQUEST);
         }
-        if(!productRepository.existsById(productID)) {
-            throw new ProductNotFoundException("Product not found");
+        if(isProductExists(productID)) {
+            throw new ProductNotFoundException("Product not found", HttpStatus.BAD_REQUEST);
         }
-        final var user = userRepository.findById(userId).get();
-        final var product = productRepository.findById(productID).get();
 
-        DiscountRequest request = DiscountRequest.builder().userType(user.getType())
-                .productCategory(product.getCategory())
-                .price(product.getPrice()).build();
+        final var discountRequest = mapUserIdAndProductIdToDiscountRequest(userId, productID);
 
-        BigDecimal discount = restClient.post().contentType(MediaType.APPLICATION_JSON)
-                .body(request)
-                .retrieve()
-                .body(BigDecimal.class);
+        final var discountValue = sendRequestAndGetDiscountValue(discountRequest);
 
+        var order = OrderMapper.INSTANCE.toOrder(orderDTO);
 
-        Order order = OrderMapper.INSTANCE.toOrder(orderDTO);
+        final var productPriceWithoutDiscount = discountRequest.getPrice();
 
-        BigDecimal productPriceWithoutDiscount = product.getPrice();
+        final var finalPriceOfProduct = calculateFinalPriceOfProduct(productPriceWithoutDiscount, discountValue);
 
-        order.setTotalPrice(productPriceWithoutDiscount.subtract(discount));
+        order.setTotalPrice(finalPriceOfProduct);
 
-
-        Order orderFromDB = orderRepository.save(order);
+        final var orderFromDB = orderRepository.save(order);
 
         return OrderMapper.INSTANCE.toDto(orderFromDB);
+    }
+
+    private BigDecimal calculateFinalPriceOfProduct(BigDecimal totalPrice,BigDecimal discount) {
+        return totalPrice.subtract(discount);
+    }
+
+    private BigDecimal sendRequestAndGetDiscountValue(DiscountRequest discountRequest) {
+        return restClient.post().contentType(MediaType.APPLICATION_JSON)
+                .body(discountRequest)
+                .retrieve()
+                .body(BigDecimal.class);
+    }
+
+    private DiscountRequest mapUserIdAndProductIdToDiscountRequest(Integer userId, Integer productId) {
+        final var user = userRepository.findById(userId).get();
+        final var product = productRepository.findById(productId).get();
+
+        return DiscountRequest.builder().userType(user.getType())
+                .productCategory(product.getCategory())
+                .price(product.getPrice()).build();
+    }
+
+    private boolean isProductExists(Integer productID) {
+        return !productRepository.existsById(productID);
+    }
+
+    private boolean isUserExists(Integer userId) {
+        return userRepository.existsById(userId);
     }
 
     @Override
