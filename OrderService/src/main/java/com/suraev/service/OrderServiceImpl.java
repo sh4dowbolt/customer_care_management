@@ -9,6 +9,7 @@ import com.suraev.repository.OrderRepository;
 import com.suraev.repository.ProductRepository;
 import com.suraev.repository.UserRepository;
 import com.suraev.util.OrderMapper;
+import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -16,12 +17,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
 import java.math.BigDecimal;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
-public class OrderServiceImpl implements OrderService {
+public class OrderServiceImpl implements OrderService  {
 
     private final UserRepository userRepository;
     private final ProductRepository productRepository;
@@ -42,15 +42,12 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public OrderDTO createOrder(OrderDTO orderDTO) {
 
-        final var productID = orderDTO.productId();
         final var userId = orderDTO.userId();
+        final var productID = orderDTO.productId();
 
-        if(!isUserExists(userId)) {
-            throw new UserNotFoundException("User not found", HttpStatus.BAD_REQUEST);
-        }
-        if(isProductExists(productID)) {
-            throw new ProductNotFoundException("Product not found", HttpStatus.BAD_REQUEST);
-        }
+
+        if(!isUserExists(userId)) throw new UserNotFoundException("User not found", HttpStatus.BAD_REQUEST);
+        if(!isProductExists(productID)) throw new ProductNotFoundException("Product not found", HttpStatus.BAD_REQUEST);
 
         final var discountRequest = mapUserIdAndProductIdToDiscountRequest(userId, productID);
 
@@ -70,15 +67,19 @@ public class OrderServiceImpl implements OrderService {
     }
 
     private BigDecimal calculateFinalPriceOfProduct(BigDecimal totalPrice,BigDecimal discount) {
+
+        if(discount == null) {
+            return  totalPrice;
+        }
         return totalPrice.subtract(discount);
     }
-
     private BigDecimal sendRequestAndGetDiscountValue(DiscountRequest discountRequest) {
         return restClient.post().contentType(MediaType.APPLICATION_JSON)
                 .body(discountRequest)
                 .retrieve()
                 .body(BigDecimal.class);
     }
+
 
     private DiscountRequest mapUserIdAndProductIdToDiscountRequest(Integer userId, Integer productId) {
         final var user = userRepository.findById(userId).get();
@@ -90,7 +91,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     private boolean isProductExists(Integer productID) {
-        return !productRepository.existsById(productID);
+        return productRepository.existsById(productID);
     }
 
     private boolean isUserExists(Integer userId) {
