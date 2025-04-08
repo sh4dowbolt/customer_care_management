@@ -23,8 +23,8 @@ public class OrderController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Order> createOrder(@RequestBody OrderDTO orderDTO) {
 
-        OrderDTO order = orderServiceImpl.createOrder(orderDTO);
+        Order order = orderServiceImpl.createOrder(orderDTO);
 
-        return new ResponseEntity<>(OrderMapper.INSTANCE.toOrder(order), HttpStatus.OK);
+        return new ResponseEntity<>(order, HttpStatus.OK);
     }
 }
