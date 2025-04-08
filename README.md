@@ -17,11 +17,11 @@
     - [x] DTO's
     - [80%] TEST MODULES
     - [90%] Services
- - [80%] DiscountService
+ - [100%] DiscountService
     - [x] Dependencies
     - [x] ENTITIES
     - [x] DTO's
-    - [50%] TEST MODULES
+    - [x] TEST MODULES
     - [x] Services
 ## STACK
 * Java SE 21
