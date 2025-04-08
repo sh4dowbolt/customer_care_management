@@ -40,7 +40,7 @@ public class OrderServiceImpl implements OrderService  {
     }
 
     @Override
-    public Order createOrder(OrderDTO orderDTO) {
+    public OrderDTO createOrder(OrderDTO orderDTO) {
 
         final var userId = orderDTO.userId();
         final var productID = orderDTO.productId();
@@ -61,7 +61,9 @@ public class OrderServiceImpl implements OrderService  {
 
         order.setTotalPrice(finalPriceOfProduct);
 
-        return orderRepository.save(order);
+        Order savedOrder = orderRepository.save(order);
+
+        return OrderMapper.INSTANCE.toDto(savedOrder);
     }
 
     private BigDecimal calculateFinalPriceOfProduct(BigDecimal totalPrice,BigDecimal discount) {

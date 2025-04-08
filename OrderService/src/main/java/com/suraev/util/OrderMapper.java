@@ -10,10 +10,12 @@ public interface OrderMapper {
 
     OrderMapper INSTANCE=Mappers.getMapper(OrderMapper.class);
 
+
     @Mapping(source = "userId", target = "user.id")
     @Mapping(source = "productId", target = "product.id")
     Order toOrder(OrderDTO orderDTO);
 
+    @Mapping(source = "order.id", target = "ordrId")
     @InheritInverseConfiguration(name = "toOrder")
     OrderDTO toDto(Order order);
 }

@@ -12,7 +12,7 @@ public interface OrderService {
 
     Optional<OrderDTO> getOrderById(Integer id);
 
-    Order createOrder(OrderDTO orderDTO);
+    OrderDTO createOrder(OrderDTO orderDTO);
 
     boolean deleteOrder(Integer orderId);
 }
