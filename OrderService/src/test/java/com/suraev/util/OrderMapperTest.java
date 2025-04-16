@@ -16,7 +16,7 @@ class OrderMapperTest {
     @Test
     public void shouldMapToOrder() {
         //given
-        OrderDTO orderDTO = new OrderDTO(1,1);
+        OrderDTO orderDTO = new OrderDTO(1,1,1);
         //when
         Order actualResult = OrderMapper.INSTANCE.toOrder(orderDTO);
         //then

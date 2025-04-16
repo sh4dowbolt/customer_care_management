@@ -9,15 +9,16 @@ import com.suraev.repository.OrderRepository;
 import com.suraev.repository.ProductRepository;
 import com.suraev.repository.UserRepository;
 import com.suraev.util.OrderMapper;
-import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestClient;
 
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -39,12 +40,13 @@ public class OrderServiceImpl implements OrderService  {
         return Optional.empty();
     }
 
+
     @Override
+    @Transactional
     public OrderDTO createOrder(OrderDTO orderDTO) {
 
         final var userId = orderDTO.userId();
         final var productID = orderDTO.productId();
-
 
         if(!isUserExists(userId)) throw new UserNotFoundException("User not found", HttpStatus.BAD_REQUEST);
         if(!isProductExists(productID)) throw new ProductNotFoundException("Product not found", HttpStatus.BAD_REQUEST);
@@ -73,6 +75,7 @@ public class OrderServiceImpl implements OrderService  {
         }
         return totalPrice.subtract(discount);
     }
+
     private BigDecimal sendRequestAndGetDiscountValue(DiscountRequest discountRequest) {
         return restClient.post().contentType(MediaType.APPLICATION_JSON)
                 .body(discountRequest)

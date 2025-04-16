@@ -111,7 +111,7 @@ class OrderServiceImplTest {
 
         private static OrderDTO getOrderDTO() {
 
-            return new OrderDTO(1,1);
+            return new OrderDTO(1, 1,1);
         }
 
 

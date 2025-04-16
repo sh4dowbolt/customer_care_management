@@ -4,7 +4,6 @@ import com.suraev.dto.ProductDTO;
 import com.suraev.entity.Product;
 import com.suraev.entity.enums.ProductCategory;
 import com.suraev.repository.ProductRepository;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 class ProductServiceImplTest {
 
     @InjectMocks
-    static ProductServiceImpl productService;
+    ProductServiceImpl productService;
     @Mock
     ProductRepository productRepository;
 

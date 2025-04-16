@@ -20,16 +20,18 @@ public class ProductController {
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<ProductDTO> getAllProducts() {
+
         return productServiceImpl.getAllProducts();
     }
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ProductDTO> getProduct(@PathVariable Integer id) {
 
-        Optional<ProductDTO> product = productServiceImpl.getProductById(id);
+    Optional<ProductDTO> product = productServiceImpl.getProductById(id);
         return product.map(productDTO -> new ResponseEntity<>(productDTO, HttpStatus.FOUND))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
+
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ProductDTO> createProduct(@RequestBody ProductDTO productDTO) {
 

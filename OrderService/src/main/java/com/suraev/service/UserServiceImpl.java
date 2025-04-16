@@ -5,6 +5,7 @@ import com.suraev.entity.User;
 import com.suraev.repository.UserRepository;
 import com.suraev.util.UserMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,6 +21,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<UserDTO> getAllUsers() {
 
         List<User> usersFromDB = userRepository.findAll();
@@ -30,6 +32,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public UserDTO createUser(UserDTO userDTO) {
 
         final var user = UserMapper.INSTANCE.toUser(userDTO);
@@ -38,11 +41,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<UserDTO> getUserById(Integer id) {
         return userRepository.findById(id).map(UserMapper.INSTANCE::toUserDTO);
     }
 
     @Override
+    @Transactional
     public boolean deleteUser(Integer id) {
         if(userRepository.existsById(id)) {
             userRepository.deleteById(id);
