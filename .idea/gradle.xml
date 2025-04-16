@@ -10,6 +10,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/DiscountService" />
+            <option value="$PROJECT_DIR$/NotificationService" />
             <option value="$PROJECT_DIR$/OrderService" />
           </set>
         </option>

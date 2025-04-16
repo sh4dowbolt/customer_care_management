@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class NotificationListener {
 
-    @RabbitListener(queues = "rabbitmq.queque")
+    @RabbitListener(queues = "${rabbitmq.queue}")
     public void getOrderMessage(String order) {
         log.info("get message from OrderService", order);
     }
