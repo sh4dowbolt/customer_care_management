@@ -11,6 +11,7 @@ public class NotificationListener {
 
     @RabbitListener(queues = "${rabbitmq.queue}")
     public void getOrderMessage(String order) {
+        System.out.println(order);
         log.info("get message from OrderService", order);
     }
 }

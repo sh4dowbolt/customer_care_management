@@ -10,6 +10,8 @@ import com.suraev.repository.ProductRepository;
 import com.suraev.repository.UserRepository;
 import com.suraev.util.OrderMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
@@ -28,6 +30,10 @@ public class OrderServiceImpl implements OrderService  {
     private final ProductRepository productRepository;
     private final OrderRepository orderRepository;
     private final RestClient restClient;
+    private final RabbitTemplate rabbitTemplate;
+
+    @Value("${rabbitmq.name}")
+    private  String queName;
 
 
     @Override
@@ -64,6 +70,8 @@ public class OrderServiceImpl implements OrderService  {
         order.setTotalPrice(finalPriceOfProduct);
 
         Order savedOrder = orderRepository.save(order);
+
+        rabbitTemplate.convertAndSend("message.queue",savedOrder.toString());
 
         return OrderMapper.INSTANCE.toDto(savedOrder);
     }

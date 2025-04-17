@@ -17,6 +17,15 @@ spring:
       hibernate:
         ddl-auto: update
 
+    rabbitmq:
+      host: localhost
+      port: 5672
+      username: guest
+      password: guest
+
 discount:
   service:
     url: http://localhost:8081/api/v1/getDiscount
+
+rabbitmq:
+    name: message.direct
