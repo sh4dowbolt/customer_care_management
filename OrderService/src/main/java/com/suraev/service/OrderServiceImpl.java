@@ -29,8 +29,8 @@ public class OrderServiceImpl implements OrderService  {
     private final UserRepository userRepository;
     private final ProductRepository productRepository;
     private final OrderRepository orderRepository;
-    private final RestClient restClient;
     private final RabbitTemplate rabbitTemplate;
+    private final DiscountServiceClient discountServiceClient;
 
     @Value("${rabbitmq.excName}")
     private  String exchangeName;
@@ -60,7 +60,7 @@ public class OrderServiceImpl implements OrderService  {
 
         final var discountRequest = mapUserIdAndProductIdToDiscountRequest(userId, productID);
 
-        final var discountValue = sendRequestAndGetDiscountValue(discountRequest);
+        final var discountValue = discountServiceClient.getDiscountValue(discountRequest);
 
         var order = OrderMapper.INSTANCE.toOrder(orderDTO);
 
@@ -84,14 +84,6 @@ public class OrderServiceImpl implements OrderService  {
         }
         return totalPrice.subtract(discount);
     }
-
-    private BigDecimal sendRequestAndGetDiscountValue(DiscountRequest discountRequest) {
-        return restClient.post().contentType(MediaType.APPLICATION_JSON)
-                .body(discountRequest)
-                .retrieve()
-                .body(BigDecimal.class);
-    }
-
 
     private DiscountRequest mapUserIdAndProductIdToDiscountRequest(Integer userId, Integer productId) {
         final var user = userRepository.findById(userId).get();
