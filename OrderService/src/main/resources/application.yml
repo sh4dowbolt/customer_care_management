@@ -28,4 +28,5 @@ discount:
     url: http://localhost:8081/api/v1/getDiscount
 
 rabbitmq:
-    name: message.direct
+    excName: orderCreate
+    qName: message.queue

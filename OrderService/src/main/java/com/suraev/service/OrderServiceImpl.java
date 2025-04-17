@@ -32,9 +32,10 @@ public class OrderServiceImpl implements OrderService  {
     private final RestClient restClient;
     private final RabbitTemplate rabbitTemplate;
 
-    @Value("${rabbitmq.name}")
-    private  String queName;
-
+    @Value("${rabbitmq.excName}")
+    private  String exchangeName;
+    @Value("${rabbitmq.qName}")
+    private  String queueName;
 
     @Override
     public List<OrderDTO> getAllOrders() {
@@ -71,7 +72,7 @@ public class OrderServiceImpl implements OrderService  {
 
         Order savedOrder = orderRepository.save(order);
 
-        rabbitTemplate.convertAndSend("message.queue",savedOrder.toString());
+        rabbitTemplate.convertAndSend(exchangeName,queueName,savedOrder.toString());
 
         return OrderMapper.INSTANCE.toDto(savedOrder);
     }
