@@ -24,7 +24,7 @@
     - [x] TEST MODULES
     - [x] Services
 - NotificationService
-    - [*] Listener
+    - [x] Listener
 - GateWay 
 ## STACK
 * Java SE 21
