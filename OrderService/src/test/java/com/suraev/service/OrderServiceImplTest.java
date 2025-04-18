@@ -20,6 +20,7 @@ import org.mockito.Answers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestClient;
@@ -44,8 +45,10 @@ class OrderServiceImplTest {
     ProductRepository productRepository;
     @Mock
     UserRepository userRepository;
-    @Mock(answer = Answers.RETURNS_DEEP_STUBS)
-    RestClient restClient;
+    @Mock
+    DiscountServiceClientImpl discountServiceClient;
+    @Mock
+    RabbitTemplate rabbitTemplate;
 
     @Nested
     public class createOrder {
@@ -81,7 +84,7 @@ class OrderServiceImplTest {
             var orderToSave = new Order(1,user.get(),product.get(),totalPriceToSet, Instant.now());
             var userId = orderDTO.userId();
             var productId = orderDTO.productId();
-            var DiscountValueResponse = BigDecimal.valueOf(2000);
+            var discountValueResponse = BigDecimal.valueOf(2000);
 
             //when
             when(userRepository.existsById(userId)).thenReturn(true);
@@ -89,12 +92,8 @@ class OrderServiceImplTest {
 
             when(userRepository.findById(userId)).thenReturn(user);
             when(productRepository.findById(productId)).thenReturn(product);
+            when(discountServiceClient.getDiscountValue(any(DiscountRequest.class))).thenReturn(discountValueResponse);
 
-            when(restClient.post().contentType(MediaType.APPLICATION_JSON).body(any(DiscountRequest.class))
-                    .retrieve().body(BigDecimal.class))
-                    .thenReturn(DiscountValueResponse);
-
-            doReturn(orderToSave).when(orderRepository).save(any(Order.class));
             //then
             OrderDTO actualResult = orderService.createOrder(orderDTO);
 
@@ -105,7 +104,8 @@ class OrderServiceImplTest {
                         () -> verify(userRepository, times(1)).findById(userId),
                         () -> verify(userRepository, times(1)).existsById(userId),
                         () -> verify(productRepository, times(1)).existsById(productId),
-                        () -> verify(productRepository, times(1)).findById(productId)
+                        () -> verify(productRepository, times(1)).findById(productId),
+                        () -> verify(rabbitTemplate, times(1)).convertAndSend(anyString(), anyString(),any(Object.class))
             );
         }
 
