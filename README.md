@@ -24,7 +24,8 @@
     - [x] TEST MODULES
     - [x] Services
 - NotificationService
-- GateWay
+    - [*] Listener
+- GateWay 
 ## STACK
 * Java SE 21
 * Spring Boot 3
