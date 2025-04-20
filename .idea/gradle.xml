@@ -12,6 +12,7 @@
             <option value="$PROJECT_DIR$/DiscountService" />
             <option value="$PROJECT_DIR$/NotificationService" />
             <option value="$PROJECT_DIR$/OrderService" />
+            <option value="$PROJECT_DIR$/RegistryService" />
           </set>
         </option>
       </GradleProjectSettings>

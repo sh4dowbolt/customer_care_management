@@ -1,0 +1,30 @@
+plugins {
+    id 'java'
+}
+
+group = 'com.suraev'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    springVersion = '3.4.4'
+}
+
+
+dependencies {
+    implementation "org.springframework.boot:spring-boot-starter:${springVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-amqp:${springVersion}"
+    compileOnly 'org.projectlombok:lombok:1.18.36'
+
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+
+    annotationProcessor 'org.projectlombok:lombok:1.18.36'
+}
+
+test {
+    useJUnitPlatform()
+}
