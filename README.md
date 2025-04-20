@@ -23,6 +23,9 @@
     - [x] DTO's
     - [x] TEST MODULES
     - [x] Services
+- NotificationService
+    - [x] Listener
+- GateWay 
 ## STACK
 * Java SE 21
 * Spring Boot 3
