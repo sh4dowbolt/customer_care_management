@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: notification_service
+    name: notification-service
 
 rabbitmq:
   queue: message.queue

@@ -5,7 +5,7 @@ server:
 
 spring:
     application:
-      name: order_service
+      name: order-service
 
     datasource:
       url: jdbc:postgresql://localhost:5432/postgres
@@ -25,7 +25,7 @@ spring:
 
 discount:
   service:
-    url: http://localhost:8081
+    url: discount-service
 
 rabbitmq:
     excName: orderCreate
