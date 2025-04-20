@@ -16,7 +16,7 @@ ext {
 
 dependencies {
     implementation "org.springframework.boot:spring-boot-starter:${springVersion}"
-    implementation "org.springframework.boot:spring-boot-starter-amqp:${springVersion}"
+    implementation "org.spring framework.boot:spring-boot-starter-amqp:${springVersion}"
     implementation "org.springframework.boot:spring-boot-starter-web:${springVersion}"
     compileOnly 'org.projectlombok:lombok:1.18.36'
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:4.2.0'

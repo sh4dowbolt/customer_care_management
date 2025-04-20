@@ -25,7 +25,7 @@ spring:
 
 discount:
   service:
-    url: http://localhost:8081/api/v1/getDiscount
+    url: http://localhost:8081
 
 rabbitmq:
     excName: orderCreate

@@ -17,6 +17,7 @@ public class DiscountServiceClientImpl implements DiscountServiceClient {
     @Override
     public BigDecimal getDiscountValue(DiscountRequest discountRequest) {
         return restClient.post()
+                .uri("/api/v1/getDiscount")
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(discountRequest)
                 .retrieve()
