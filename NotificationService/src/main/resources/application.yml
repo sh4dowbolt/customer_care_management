@@ -1,6 +1,10 @@
 server:
   port: 8082
 
+spring:
+  application:
+    name: notification_service
+
 rabbitmq:
   queue: message.queue
   host: localhost
@@ -12,3 +16,8 @@ rabbit:
     name: queue_with_auto_ack
   queue_without_auto_ack:
     name: queue_without_auto_ack
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
