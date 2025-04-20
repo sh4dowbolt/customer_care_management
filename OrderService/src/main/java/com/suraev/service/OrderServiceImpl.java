@@ -36,6 +36,10 @@ public class OrderServiceImpl implements OrderService  {
     private  String exchangeName;
     @Value("${rabbitmq.qName}")
     private  String queueName;
+    @Value("${rabbitmq.queue_with_auto_ack}")
+    private  String queue_with_auto_ack;
+    @Value("${rabbitmq.queue_without_auto_ack}")
+    private  String queue_without_auto_ack;
 
     @Override
     public List<OrderDTO> getAllOrders() {
@@ -73,6 +77,9 @@ public class OrderServiceImpl implements OrderService  {
         Order savedOrder = orderRepository.save(order);
 
         rabbitTemplate.convertAndSend(exchangeName,queueName,savedOrder.toString());
+        rabbitTemplate.convertAndSend(exchangeName,queue_with_auto_ack, savedOrder.toString());
+        rabbitTemplate.convertAndSend(exchangeName,queue_without_auto_ack, savedOrder.toString());
+
 
         return OrderMapper.INSTANCE.toDto(savedOrder);
     }

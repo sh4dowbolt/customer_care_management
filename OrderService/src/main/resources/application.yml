@@ -30,3 +30,5 @@ discount:
 rabbitmq:
     excName: orderCreate
     qName: message.queue
+    queue_with_auto_ack: queue_with_auto_ack
+    queue_without_auto_ack: queue_without_auto_ack

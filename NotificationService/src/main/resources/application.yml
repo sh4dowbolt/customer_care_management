@@ -7,6 +7,7 @@ rabbitmq:
   port: 5672
   username: guest
   password: guest
+rabbit:
   queue_with_auto_ack:
     name: queue_with_auto_ack
   queue_without_auto_ack:
