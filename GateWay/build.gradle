@@ -8,19 +8,18 @@ version = '1.0-SNAPSHOT'
 repositories {
     mavenCentral()
 }
-
 ext {
     springVersion = '3.4.4'
 }
 
 
 dependencies {
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
     implementation "org.springframework.boot:spring-boot-starter:${springVersion}"
-    implementation 'org.springframework.boot:spring-boot-starter-amqp:3.4.4'
-    implementation "org.springframework.boot:spring-boot-starter-web:${springVersion}"
     compileOnly 'org.projectlombok:lombok:1.18.36'
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:4.2.0'
-
+    implementation 'org.springframework.cloud:spring-cloud-starter-gateway:4.2.2'
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
 

@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 0
   servlet:
     context-path: /api/v1/
 
@@ -25,7 +25,7 @@ spring:
 
 discount:
   service:
-    url: discount-service
+    url: http://discount-service
 
 rabbitmq:
     excName: orderCreate
@@ -37,3 +37,6 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://localhost:8761/eureka/
+      instance:
+        hostname: order-service
+
