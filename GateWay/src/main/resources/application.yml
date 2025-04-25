@@ -18,3 +18,9 @@ spring:
             - Path=/discount-service/**
           filters:
             - RewritePath=/discount-service/(?<segment>.*), /api/v1/$\{segment}
+    zookeeper:
+      connect-string: localhost:2181
+      discovery:
+        enabled: true
+        instance-id: ${spring.application.name}:${random.value}
+        register: true

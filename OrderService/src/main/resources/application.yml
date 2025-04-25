@@ -23,6 +23,14 @@ spring:
       username: guest
       password: guest
 
+    cloud:
+      zookeeper:
+        connect-string: localhost:2181
+        discovery:
+          enabled: true
+          instance-id: ${spring.application.name}:${random.value}
+          register: true
+
 discount:
   service:
     url: http://localhost:8081
@@ -32,3 +40,4 @@ rabbitmq:
     qName: message.queue
     queue_with_auto_ack: queue_with_auto_ack
     queue_without_auto_ack: queue_without_auto_ack
+

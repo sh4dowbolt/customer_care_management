@@ -36,6 +36,7 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
 
     implementation 'org.springframework.cloud:spring-cloud-zookeeper-dependencies:4.2.1'
+    implementation 'org.springframework.cloud:spring-cloud-starter-zookeeper-discovery:4.2.1'
 }
 test {
     useJUnitPlatform()

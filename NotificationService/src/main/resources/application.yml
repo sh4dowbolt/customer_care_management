@@ -4,6 +4,13 @@ server:
 spring:
   application:
     name: notification-service
+  cloud:
+    zookeeper:
+      connect-string: localhost:2181
+      discovery:
+        enabled: true
+        instance-id: ${spring.application.name}:${random.value}
+        register: true
 
 rabbitmq:
   queue: message.queue

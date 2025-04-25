@@ -32,6 +32,7 @@ dependencies {
     compileOnly 'org.projectlombok:lombok:1.18.36'
 
     implementation 'org.springframework.cloud:spring-cloud-zookeeper-dependencies:4.2.1'
+    implementation 'org.springframework.cloud:spring-cloud-starter-zookeeper-discovery:4.2.1'
 }
 
 test {

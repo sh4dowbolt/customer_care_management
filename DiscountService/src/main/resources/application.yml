@@ -16,3 +16,10 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
+  cloud:
+    zookeeper:
+      connect-string: localhost:2181
+      discovery:
+        enabled: true
+        instance-id: ${spring.application.name}:${random.value}
+        register: true
