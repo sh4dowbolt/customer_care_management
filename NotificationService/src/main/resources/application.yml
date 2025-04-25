@@ -17,7 +17,3 @@ rabbit:
   queue_without_auto_ack:
     name: queue_without_auto_ack
 
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:8761/eureka/

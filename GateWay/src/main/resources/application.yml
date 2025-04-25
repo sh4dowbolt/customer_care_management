@@ -12,9 +12,9 @@ spring:
             - Path=/order-service/**
           filters:
             - RewritePath=/order-service/(?<segment>.*), /api/v1/$\{segment}
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
-      instance:
-        hostname: gateway
+        - id: discount-service
+          uri: lb://discount-service
+          predicates:
+            - Path=/discount-service/**
+          filters:
+            - RewritePath=/discount-service/(?<segment>.*), /api/v1/$\{segment}
